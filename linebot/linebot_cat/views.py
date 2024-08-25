@@ -3,9 +3,8 @@ import requests
 import base64
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from api import (
+from .api import (
     REPLY_ENDPOINT_URL,
-    IMG_URL,
     ACCESS_TOKEN,
     DEEPL_AUTH_KEY,
     DEEPL_API,
@@ -78,6 +77,7 @@ def handle_image_message(reply_token, img_id):
     reply to user depending on the result of the detection of whether the image is of cat or not
     / 画像メッセージをGoogle Cloud Vision APIに送って、猫かどうか判断し、結果によって返信する
     """
+    IMG_URL = f'https://api-data.line.me/v2/bot/message/{img_id}/content'
     headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
     response = requests.get(IMG_URL, headers=headers)
     img_content = response.content
